@@ -80,8 +80,8 @@ namespace conn4_client
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tab_main);
             this.tabControl1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.tabControl1.Location = new System.Drawing.Point(738, 0);
@@ -488,9 +488,9 @@ namespace conn4_client
             // 
             // pic_board
             // 
-            this.pic_board.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pic_board.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pic_board.BackColor = System.Drawing.Color.White;
             this.pic_board.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pic_board.Location = new System.Drawing.Point(0, 0);
@@ -498,15 +498,15 @@ namespace conn4_client
             this.pic_board.Size = new System.Drawing.Size(738, 569);
             this.pic_board.TabIndex = 0;
             this.pic_board.TabStop = false;
-            this.pic_board.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_board_MouseDown);
             this.pic_board.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_board_Paint);
+            this.pic_board.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_board_MouseDown);
             // 
             // bw
             // 
             this.bw.WorkerReportsProgress = true;
             this.bw.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bw_DoWork);
-            this.bw.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bw_RunWorkerCompleted);
             this.bw.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bw_ProgressChanged);
+            this.bw.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bw_RunWorkerCompleted);
             // 
             // Form1
             // 
@@ -518,7 +518,7 @@ namespace conn4_client
             this.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Connect 4 [ Hüseyin Uslu ]";
+            this.Text = "Connect 4";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.tab_main.ResumeLayout(false);

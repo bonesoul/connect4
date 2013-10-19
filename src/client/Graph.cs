@@ -9,10 +9,10 @@ namespace conn4_client
      * Grafiksel tahta, hücre ve insan oyuncu için taþ atma fonksiyonlarý
     */
 
-    class graph
+    class Graph
     {
         #region tahtayi_grafiksel_olarak_boya
-        public static void paint_board(System.Windows.Forms.PictureBox pb, System.Windows.Forms.PaintEventArgs e, board b)
+        public static void paint_board(System.Windows.Forms.PictureBox pb, System.Windows.Forms.PaintEventArgs e, Board b)
         {
             int board_width;
             int board_height;
@@ -36,9 +36,9 @@ namespace conn4_client
             pb.Image = null; // oyun tahtasini temizle
             e.Graphics.FillRectangle(new SolidBrush(Color.RoyalBlue), 0, 0, board_width, board_height);
 
-            for (i = 0; i < board.height ; i++)
+            for (i = 0; i < Board.height ; i++)
             {
-                for (j = 0; j < board.width; j++)
+                for (j = 0; j < Board.width; j++)
                 {
                     // oyun tahtasýndaki hücreleri, durumunu ifade eden renklerle çiz
                     if (b.board_cells[j,i].status == cell_status.PLAYER_2) { c = Color.Red; }
@@ -61,18 +61,18 @@ namespace conn4_client
         #endregion
 
         #region insan_oyunucun_hamlesini_oku
-        public static void board_mouse_down(System.Windows.Forms.MouseEventArgs e,board b,move_type m)
+        public static void board_mouse_down(System.Windows.Forms.MouseEventArgs e,Board b,move_type m)
         {
             // mouse kordinatlarýndan yola çýkarak taþýn atýlacaðý sütunu bul
             int i, j;
 
-            if ((desk.game_state!= state.FINISHED) & (desk.game_state!=state.NOT_STARTED)) // oyun halen devam ediyorsa
+            if ((Desk.game_state!= state.FINISHED) & (Desk.game_state!=state.NOT_STARTED)) // oyun halen devam ediyorsa
             { 
-                if (desk.get_seat(m) == seat.HUMAN) // mevcut oyuncu bir insan oyuncuysa
+                if (Desk.get_seat(m) == seat.HUMAN) // mevcut oyuncu bir insan oyuncuysa
                 {
                     // kordinatlardan yola çýkarak taþýn atýldýðý sütunu bul
-                    for (i = 0; i < board.width; i++)
-                        for (j = 0; j < board.height; j++)
+                    for (i = 0; i < Board.width; i++)
+                        for (j = 0; j < Board.height; j++)
                         {
                             // mevcut mouse kordinatlarý için, taþýn atýlabileceði uygun sütun satýrý bul
                             if ((b.board_cells[i, j].graph_x1 < e.X) & (b.board_cells[i, j].graph_x2 > e.X))
@@ -81,7 +81,7 @@ namespace conn4_client
                                     if (b.board_cells[i, j].status == cell_status.EMPTY)
                                     {
                                         b.move(m, i); // insan oyuncu hamlesi
-                                        desk.turn_complete(); // hamle bitiþi
+                                        Desk.turn_complete(); // hamle bitiþi
                                     }
                                     break;
                                 }

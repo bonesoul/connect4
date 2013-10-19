@@ -44,7 +44,7 @@ namespace conn4_client
     }
     #endregion
 
-    public static class desk // oyun masasý
+    public static class Desk // oyun masasý
     {
         #region masa_sýnýf_üyeleri
         public static seat seat1=seat.EMPTY;    // oturak 1 öntanýmlý olarak boþ
@@ -52,7 +52,7 @@ namespace conn4_client
         public static int seat1_look_ahead=6;   // oturak 1'e gelebilecek bir yapay zeka oyuncusunun öntanýmlý arama derinliði=6
         public static int seat2_look_ahead = 6; // oturak 2'e gelebilecek bir yapay zeka oyuncusunun öntanýmlý arama derinliði=6
         public static state game_state= state.NOT_STARTED; // oyun durumu = henüz baþlamamýþ
-        public static board b; // masa üzerindeki tahta 
+        public static Board b; // masa üzerindeki tahta 
         public static move_type last_ai; // son AI oyuncusunun hamlesi - thread ile arka planda çalýþan AI'nin seçtiði hareketi belirtmesini saðlar
         public static int last_move; // masa üzerinde son hamle - að üzerinden oyunlarda masa üzerindeki son hamlenin karþý tarafa iletilmesini saðlar
 
@@ -93,7 +93,7 @@ namespace conn4_client
                     pb.Refresh(); // grafikleri yenile
                     msg = sr.ReadLine(); // socket üzerinden karþý tarafýn hamlesini oku
                     b.move((move_type)game_state, Int32.Parse(msg)); // gelen hamleyi tahta üzerinde oyna
-                    desk.turn_complete(); // hamle bitiþi ardýndan, gerekli iþlemleri yap ve sýranýn diðer oyuncuya geçmesini saðla
+                    Desk.turn_complete(); // hamle bitiþi ardýndan, gerekli iþlemleri yap ve sýranýn diðer oyuncuya geçmesini saðla
                     
                 }
 
@@ -115,7 +115,7 @@ namespace conn4_client
                     pb.Refresh(); // grafikleri yenile
                     msg = sr.ReadLine();
                     b.move((move_type)game_state, Int32.Parse(msg));
-                    desk.turn_complete();
+                    Desk.turn_complete();
                 }
 
             }
@@ -213,12 +213,12 @@ namespace conn4_client
             if (player == move_type.PLAYER_1) p = 0;
             else p = 1;
 
-            for (k = 0; k < board.winning_places; k++)
+            for (k = 0; k < Board.winning_places; k++)
                 if (b.score[p, k] == 16)
                 {
-                    for (i = 0; i < board.width; i++)
-                        for (j = 0; j < board.height; j++)
-                            if (board.win_map[i, j, k] == true)
+                    for (i = 0; i < Board.width; i++)
+                        for (j = 0; j < Board.height; j++)
+                            if (Board.win_map[i, j, k] == true)
                                 b.board_cells[i, j].winning_cell = true;
                 }
         }

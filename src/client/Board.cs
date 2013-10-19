@@ -18,13 +18,13 @@ namespace conn4_client
     } // hamle türü
     #endregion
 
-    public class board
+    public class Board
     {
         #region tahta_sinif_uyeleri
         public static int width = 7; // sütun sayýsý
         public static int height = 6; // satýr sayýsý
 
-        public cell[,] board_cells = new cell[width, height];  // oyun tahtasý büyüklüðünde cell sýnýfýndan 2 boyutlu dizi
+        public Cell[,] board_cells = new Cell[width, height];  // oyun tahtasý büyüklüðünde cell sýnýfýndan 2 boyutlu dizi
         public static int winning_places=69; // tahta boyutlarý için toplam kazanabilme durumu sayýsý
         public static int max_pieces=42; // tahta boyutlarý için toplam hücre sayýsý
         public static Boolean [,,] win_map; // tahta için kazanma durumlarý haritasý
@@ -33,7 +33,7 @@ namespace conn4_client
         #endregion
 
         #region board()_ontanimli_kurucu
-        public board() // öntanýmlý kurucu
+        public Board() // öntanýmlý kurucu
         {
             // kazanma haritasýný hazýrla
             int i, j, k, count = 0;
@@ -88,7 +88,7 @@ namespace conn4_client
             for (i = 0; i < width; i++)
                 for (j = 0; j < height; j++)
                 {
-                    board_cells[i, j] = new cell();
+                    board_cells[i, j] = new Cell();
                     board_cells[i, j].x = i; // x-kordinatý
                     board_cells[i, j].y = j; // y-kordinatý
                     board_cells[i, j].status = cell_status.EMPTY; // hücre öntanýmlý olarak boþtur
@@ -105,14 +105,14 @@ namespace conn4_client
         #endregion
 
         #region board(board t)_kopyalama_kurucusu
-        public board(board t) // kopyalama kurucusu - verilen bir board türündeki t tahtasýnýn mevcut tahtaya kopyalar
+        public Board(Board t) // kopyalama kurucusu - verilen bir board türündeki t tahtasýnýn mevcut tahtaya kopyalar
         {
             int i,j;
             // hücreleri kopyala
             for (i = 0; i < width; i++)
                 for (j = 0; j < height; j++)
                 {
-                    board_cells[i, j] = new cell();
+                    board_cells[i, j] = new Cell();
                     board_cells[i, j].x = i;
                     board_cells[i, j].y = j;
                     board_cells[i, j].status = t.board_cells[i, j].status; 

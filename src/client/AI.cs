@@ -9,17 +9,17 @@ namespace conn4_client
      * alpha-beta iyileþtirmeli minmax fonksiyonu
     */
 
-    public class ai
+    public class AI
     {
         #region compute_move() - Yapay Zeka, en iyi hamleyi hesapla
-        public static int compute_move(board b,move_type player, int level,System.ComponentModel.BackgroundWorker bw)
+        public static int compute_move(Board b,move_type player, int level,System.ComponentModel.BackgroundWorker bw)
         {
-            board t; // hesaplama yapýlacak yeni tahta
+            Board t; // hesaplama yapýlacak yeni tahta
             int best_move_pos = 0; // en iyi oynama pozisyonu
             int score;
 
             bw.ReportProgress(0); // Hesapla durumunu bildir - Form1 üzerindeki Progress bar bu deðere göre bir hesaplama durumu gösterir
-            t = new board(b); // hesaplama yapýlacak tahtayý, mevcut oyun tahtasýnýn o anki halinden kopyala
+            t = new Board(b); // hesaplama yapýlacak tahtayý, mevcut oyun tahtasýnýn o anki halinden kopyala
             score = max(t, player, level,ref best_move_pos,bw); // t tahtasý üzerinde, player oyuncusu için, level arama derinlikli
                                                                 // en iyi hamleyi bul
                                                                 // best_move deðiþkeni, olasý en iyi hamleyi ifade etmektedir
@@ -32,18 +32,18 @@ namespace conn4_client
         #endregion
 
         #region max - Maksimum kazanç
-        private static int max(board b, move_type player, int depth,ref int pos,System.ComponentModel.BackgroundWorker bw)
+        private static int max(Board b, move_type player, int depth,ref int pos,System.ComponentModel.BackgroundWorker bw)
         {
             int alpha = -30000; // alpha - en iyi hamle puaný
             int i;
-            board t; // sonraki hamlenin hesaplanacaðý tahta kopyasý
+            Board t; // sonraki hamlenin hesaplanacaðý tahta kopyasý
             int score; // hamle skoru
 
-            if (depth != 0 & b.curr_pieces!=board.max_pieces ) // Eðer boardda hala oynanabilecek alan varsa
+            if (depth != 0 & b.curr_pieces!=Board.max_pieces ) // Eðer boardda hala oynanabilecek alan varsa
             {                                                  // veya arama derinliði 0'a inmemiþse devam et
                 for (i = 0; i < 7; i++) // 7 farklý sütun için hamle hazýrla
                 {
-                    t = new board(b); // hesaplama yapýlacak tahta kopyasýný hazýrla
+                    t = new Board(b); // hesaplama yapýlacak tahta kopyasýný hazýrla
                     if (t.move(player, i)) // mevcut sütuna yapýlan hamle baþarýlýysa
                     {
                         if (t.is_winner(player)) // ve oyunu kazandýysak (alpha-beta pruning)
@@ -86,11 +86,11 @@ namespace conn4_client
         #endregion
 
         #region min - Minumum kazanç
-        private static int min(board b, move_type player, int depth)
+        private static int min(Board b, move_type player, int depth)
         {
             int beta = 30000; // beta - AI açýsýndan rakibin en iyi hamle puaný
             int i;
-            board t; // sonraki hamlenin hesaplanacaðý tahta puaný
+            Board t; // sonraki hamlenin hesaplanacaðý tahta puaný
             int score;
             int foo=0; // dummy deðiþken
 
@@ -98,7 +98,7 @@ namespace conn4_client
             {              
                 for (i = 0; i < 7; i++) // 7 farklý sütun için hamle hazýrla
                 {
-                    t = new board(b); // hesaplama yapýlacak tahta kopyasýný hazýrla
+                    t = new Board(b); // hesaplama yapýlacak tahta kopyasýný hazýrla
                     if (t.move(player, i)) // mevcut sütuna yapýlan hamle baþarýlýysa
                     {
                         if (t.is_winner(player)) // hamle oyunu kazandýrýyorsa, rakip oyuncu oyunu kazanacaktýr demektir.

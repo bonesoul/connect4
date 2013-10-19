@@ -13,7 +13,7 @@ namespace conn4_client
 {
     public partial class Form1 : Form
     {
-        public board b; // Form üzerinde board türünden b nesnesi
+        public Board b; // Form üzerinde board türünden b nesnesi
         
         #region Form1()_default_constructor
         public Form1()
@@ -25,27 +25,27 @@ namespace conn4_client
         #region Form1_Load - baþlangýç fonksiyonu
         private void Form1_Load(object sender, EventArgs e) // Form1_Load() - baþlangýç fonksiyonu
         {
-            desk.pic_turn1 = pic_seat1_turn;
-            desk.pic_turn2 = pic_seat2_turn;
-            desk.bw = bw; // background-worker - Yapay zekanýn thread ile arka planda çalýþmasýný saðlayan nesne
-            desk.cursor = this.Cursor;
-            desk.lbl_status = lbl_status;
-            desk.pb = pic_board;
-            b = new board(); // geçici board nesnesi - oyun baþlamadan boþ tahta grafiðinin boyanmasýný saðlar
+            Desk.pic_turn1 = pic_seat1_turn;
+            Desk.pic_turn2 = pic_seat2_turn;
+            Desk.bw = bw; // background-worker - Yapay zekanýn thread ile arka planda çalýþmasýný saðlayan nesne
+            Desk.cursor = this.Cursor;
+            Desk.lbl_status = lbl_status;
+            Desk.pb = pic_board;
+            b = new Board(); // geçici board nesnesi - oyun baþlamadan boþ tahta grafiðinin boyanmasýný saðlar
         }
         #endregion
 
         #region pic_board_Paint();
         private void pic_board_Paint(object sender, PaintEventArgs e)
         {
-                graph.paint_board(pic_board, e, b); // tahtayý boya
+                Graph.paint_board(pic_board, e, b); // tahtayý boya
         }
         #endregion
 
         #region pic_board_MouseDown()
         private void pic_board_MouseDown(object sender, MouseEventArgs e)
         {
-                graph.board_mouse_down(e, b, (move_type)desk.get_current_player()); // insan oyuncunun hamlesini iþle
+                Graph.board_mouse_down(e, b, (move_type)Desk.get_current_player()); // insan oyuncunun hamlesini iþle
         }
         #endregion
 
@@ -84,16 +84,16 @@ namespace conn4_client
             if (item == "AI") // yapay zeka ise
             {
                 lbl_seat1.Image = img_list.Images[0];
-                desk.seat1 = seat.AI; // oturaða yapay zeka oturdu
+                Desk.seat1 = seat.AI; // oturaða yapay zeka oturdu
                 grp_AI_1.Visible = true;
             }
             else if (item == "AI_net") // að üzerinden yapay zeka ise
             {
                 // rakibi kontrol et
-                if (desk.seat2 != seat.AI_OVER_NET) 
+                if (Desk.seat2 != seat.AI_OVER_NET) 
                 {
                     lbl_seat1.Image = img_list.Images[1];
-                    desk.seat1 = seat.AI_OVER_NET; // að üzerinden yapay zekayý oturt
+                    Desk.seat1 = seat.AI_OVER_NET; // að üzerinden yapay zekayý oturt
                     grp_AI_net.Visible = true;
                 }
                 else // rakipte að üzerinden yapay zeka ise, oyun oynanamaz
@@ -104,7 +104,7 @@ namespace conn4_client
             else if (item == "human") // insan oyuncu ise
             {
                 lbl_seat1.Image = img_list.Images[2];
-                desk.seat1 = seat.HUMAN; // insan oyuncuyu oturt
+                Desk.seat1 = seat.HUMAN; // insan oyuncuyu oturt
             }
 
             show_group_boxes();
@@ -119,15 +119,15 @@ namespace conn4_client
             if (item == "AI")
             {
                 lbl_seat2.Image = img_list.Images[0];
-                desk.seat2 = seat.AI;
+                Desk.seat2 = seat.AI;
                 grp_AI_2.Visible = true;
             }
             else if (item == "AI_net")
             {
-                if (desk.seat1 != seat.AI_OVER_NET)
+                if (Desk.seat1 != seat.AI_OVER_NET)
                 {
                     lbl_seat2.Image = img_list.Images[1];
-                    desk.seat2 = seat.AI_OVER_NET;
+                    Desk.seat2 = seat.AI_OVER_NET;
                     grp_AI_net.Visible = true;
                 }
                 else
@@ -138,7 +138,7 @@ namespace conn4_client
             else if (item == "human")
             {
                 lbl_seat2.Image = img_list.Images[2];
-                desk.seat2 = seat.HUMAN;
+                Desk.seat2 = seat.HUMAN;
             }
 
             show_group_boxes();
@@ -158,7 +158,7 @@ namespace conn4_client
             grp_AI_2.Visible = false;
             grp_AI_net.Visible = false;
 
-            switch (desk.seat1)
+            switch (Desk.seat1)
             {
                 case seat.EMPTY:
                     break;
@@ -186,7 +186,7 @@ namespace conn4_client
                     break;
             }
 
-            switch (desk.seat2)
+            switch (Desk.seat2)
             {
                 case seat.EMPTY:
                     break;
@@ -216,32 +216,32 @@ namespace conn4_client
         // oyuncu-1 yapak zekasý olduðu durumda, arama derinliðini deðiþtirilmesini saðlar
         private void num_AI1_look_ahead_ValueChanged(object sender, EventArgs e)
         {
-            desk.seat1_look_ahead = Int32.Parse(num_AI1_look_ahead.Value.ToString());
+            Desk.seat1_look_ahead = Int32.Parse(num_AI1_look_ahead.Value.ToString());
         }
 
         // oyuncu-2 yapak zekasý olduðu durumda, arama derinliðini deðiþtirilmesini saðlar
         private void num_AI2_look_ahead_ValueChanged(object sender, EventArgs e)
         {
-            desk.seat2_look_ahead = Int32.Parse(num_AI2_look_ahead.Value.ToString());
+            Desk.seat2_look_ahead = Int32.Parse(num_AI2_look_ahead.Value.ToString());
         }
         #endregion
 
         #region cmd_start_Click - Oyunu baslat
         private void cmd_start_Click(object sender, EventArgs e)
         {
-                if (desk.game_state == state.FINISHED) // zaten oyun bitmiþ bir tahta varsa
+                if (Desk.game_state == state.FINISHED) // zaten oyun bitmiþ bir tahta varsa
                 {
-                    desk.game_state = state.NOT_STARTED; // oyunu sýfýrla
-                    desk.seat1 = seat.EMPTY; // oturaklarý sýfýrla
-                    desk.seat2 = seat.EMPTY;
+                    Desk.game_state = state.NOT_STARTED; // oyunu sýfýrla
+                    Desk.seat1 = seat.EMPTY; // oturaklarý sýfýrla
+                    Desk.seat2 = seat.EMPTY;
                     show_group_boxes(); // oyuncu ayar bölümlerini yenide ayarla
                 }
-                if (desk.seat1 != seat.EMPTY & desk.seat2 != seat.EMPTY) // iki oturakta doluysa
+                if (Desk.seat1 != seat.EMPTY & Desk.seat2 != seat.EMPTY) // iki oturakta doluysa
                 {
-                    b = new board(); // yeni tahta yarat
-                    desk.b = b; // masa üzerinde tahtaya referans ver
+                    b = new Board(); // yeni tahta yarat
+                    Desk.b = b; // masa üzerinde tahtaya referans ver
                     pic_board.Refresh(); // oyun baþlamadan önce grafiði hazýrla
-                    desk.play(); // oyun motorunu çalýþtýr
+                    Desk.play(); // oyun motorunu çalýþtýr
                 }
                 else
                 {
@@ -259,13 +259,13 @@ namespace conn4_client
             move_type player;
             player = (move_type)e.Argument; // oynayacak oyuncuyu bul
 
-            desk.last_ai = player; // oynayan oyuncuyu kaydet
+            Desk.last_ai = player; // oynayan oyuncuyu kaydet
             
             // yapay zekanýn compute_move() fonksiyonunu çalýþtýr
             if(player== move_type.PLAYER_1)
-                e.Result=ai.compute_move(desk.b, move_type.PLAYER_1,desk.seat1_look_ahead,bw);
+                e.Result=AI.compute_move(Desk.b, move_type.PLAYER_1,Desk.seat1_look_ahead,bw);
             else
-                e.Result=ai.compute_move(desk.b, move_type.PLAYER_2, desk.seat2_look_ahead,bw);
+                e.Result=AI.compute_move(Desk.b, move_type.PLAYER_2, Desk.seat2_look_ahead,bw);
         }
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -277,9 +277,9 @@ namespace conn4_client
         {
             int best_move;
             best_move = Int32.Parse(e.Result.ToString()); // thread döndürdüðü oynanacak sütun bul
-            b.move(desk.last_ai, best_move); // hamleyi oyna
-            desk.last_move = best_move; // hamleyi kaydet (að üzerinden gönderilmesinin gerektiði durumlar için)
-            desk.turn_complete(); // hamleyi sonlandýr
+            b.move(Desk.last_ai, best_move); // hamleyi oyna
+            Desk.last_move = best_move; // hamleyi kaydet (að üzerinden gönderilmesinin gerektiði durumlar için)
+            Desk.turn_complete(); // hamleyi sonlandýr
         }
         #endregion
 
@@ -314,8 +314,8 @@ namespace conn4_client
                 TcpClient client = new TcpClient();
                 
                 lbl_status.Text = "Baðlanýlýyor; " + server + ":" + port;
-                b = new board(); // yeni tahta yarat
-                desk.b = b; // masa üzerinde tahtaya referans ver
+                b = new Board(); // yeni tahta yarat
+                Desk.b = b; // masa üzerinde tahtaya referans ver
                 pic_board.Refresh();
 
                 client.Connect(server, port); // sunucuya baðlan
@@ -323,33 +323,33 @@ namespace conn4_client
                 ns = client.GetStream();
                 sr = new StreamReader(ns); // soket okyucusu 
                 sw = new StreamWriter(client.GetStream()); // soket yazýcýsý
-                desk.sr = sr; // masaya soket okuyucu baðla
-                desk.sw = sw; // masaya soket yazýcýyý baðla
+                Desk.sr = sr; // masaya soket okuyucu baðla
+                Desk.sw = sw; // masaya soket yazýcýyý baðla
 
                 msg = sr.ReadLine(); // ilk hamlenin hangi oyuncuya ait olduðunu sunucudan oku
                 if (msg.ToLower().ToString() == "white") // eðer white gelirse lokal oyuncu ilk oynacaktýr
                 {
-                    if (desk.seat1 == seat.AI_OVER_NET)
+                    if (Desk.seat1 == seat.AI_OVER_NET)
                     {
-                        desk.game_state = state.PLAYER2; // lokal oyuncu; oyuncu-2
+                        Desk.game_state = state.PLAYER2; // lokal oyuncu; oyuncu-2
                     }
-                    else if (desk.seat2 == seat.AI_OVER_NET)
+                    else if (Desk.seat2 == seat.AI_OVER_NET)
                     {
-                        desk.game_state = state.PLAYER1; // lokal oyuncu; oyuncu-1
+                        Desk.game_state = state.PLAYER1; // lokal oyuncu; oyuncu-1
                     }
                 }
                 else // "white" dýþý durumda, að üzerindeki rakip oyuncu ilk hamleyi yapacak
                 {
-                    if (desk.seat1 == seat.AI_OVER_NET)
+                    if (Desk.seat1 == seat.AI_OVER_NET)
                     {
-                        desk.game_state = state.PLAYER1; // sýra rakip oyuncuda
+                        Desk.game_state = state.PLAYER1; // sýra rakip oyuncuda
                     }
-                    else if (desk.seat2 == seat.AI_OVER_NET)
+                    else if (Desk.seat2 == seat.AI_OVER_NET)
                     {
-                        desk.game_state = state.PLAYER2; // sýra rakip oyuncuda
+                        Desk.game_state = state.PLAYER2; // sýra rakip oyuncuda
                     }
                 }
-                desk.play(); // oyun motorunu çalýþtýr
+                Desk.play(); // oyun motorunu çalýþtýr
             }
             catch (Exception socket_exc) // baðlantýnýn saðlanamadýðý durumlar
             {

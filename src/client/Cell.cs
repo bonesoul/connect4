@@ -19,7 +19,7 @@ namespace conn4_client
     } // Hücre durumu olasý deðerleri
     #endregion
 
-    public class cell
+    public class Cell
     {
         #region hücre_sinifi_üyeleri
         // tahta üzerinde hücre kordinatlarý
@@ -35,7 +35,7 @@ namespace conn4_client
         public Boolean winning_cell = false; // bir oyuncu oyunu kazandýðýnda, kazandýðý pozisyondaki hücrelerin iþaretlenmesini saðlar
         #endregion
 
-        public cell()
+        public Cell()
         {
            // öntanýmlý kurucu
         }
